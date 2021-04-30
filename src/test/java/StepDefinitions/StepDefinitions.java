@@ -3,6 +3,7 @@ package StepDefinitions;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,7 +29,7 @@ public class StepDefinitions {
         
         driver.get("https://login.mailchimp.com/signup/");
         
-        //driver.manage().window().setSize(new Dimension(1552, 840));
+        driver.manage().window().setSize(new Dimension(1552, 840));
 
 	}
 
@@ -47,7 +48,6 @@ public class StepDefinitions {
 	@When("User enters {string} and {string}")
 	public void user_enters_username_and_password(String string, String string2) {
 
-	//fungerande inloggning
 	if (string.equals("randomuser")) {
 		WebElement username = driver.findElement(By.id("new_username"));
 		Random rand = new Random();
@@ -56,19 +56,16 @@ public class StepDefinitions {
 		
 	}
 	
-	//användare finns redan
 	else if (string.equals("noemailuser")) {
 	WebElement username = driver.findElement(By.id("new_username"));
 	username.sendKeys("noemailuser");
 		
 	}
 	
-	//100+ tecken
 	else if (string.equals("longuser")) {
 	WebElement username = driver.findElement(By.id("new_username"));
 	username.sendKeys("Jjjjjjjjjjjjjjjjjjjjjjsdkkkkkkkkkkkkkkknnnnnnnnnnnnnnnttttttttttttttttrr4554545ffffffffdddvgferterwfvddfg");}
 		
-	//användare finns redan
 	else if (string.equals("alreadytaken")) {
 	WebElement username = driver.findElement(By.id("new_username"));
 	username.sendKeys("alreadytaken");
@@ -95,16 +92,34 @@ public class StepDefinitions {
 		}
 
 
-	@Then("I should be signed up {string}")
-	public void i_should_be_signed_up(String result) {
-		
-		
-	    assertEquals(driver.findElement(By.className("invalid-error")).getText(), is ("Please enter a value"));
+		@Then("The {string} should be for {string}")
+		public void the_should_be_for(String result, String user) {
+			
+	if (user.equals("randomuser")) {
+			
+		    assertEquals(driver.findElement(By.className("!margin-bottom--lv3 no-transform center-on-medium")).getText(), result);
 
-	    assertEquals(driver.findElement(By.className("invalid-error")).getText(), is ("Another user with this username already exists. Maybe it's your evil twin. Spooky."));
-	    
-	    assertEquals(driver.findElement(By.className("invalid-error")).getText(), is ("Enter a value less than 100 characters long"));
+		}
+	else if (user.equals("noemailuser")) {
 		
+	    assertEquals(driver.findElement(By.className("invalid-error")).getText(), result);
+	
+	}
+	else if (user.equals("longuser")) {
+		
+	    assertEquals(driver.findElement(By.className("invalid-error")).getText(), result);
+
+		
+	}
+				
+	else if (user.equals("alreadytaken")) {
+		
+	}
+	    
+	    assertEquals(driver.findElement(By.className("invalid-error")).getText(), result);
+		
+
+	    
 
         
 	if(driver.getCurrentUrl().equalsIgnoreCase( 
@@ -116,12 +131,7 @@ public class StepDefinitions {
 			      } 
 	  driver.close(); 
 			      
-			 	
-	}
-
-	private Object is(String string) {
-		// TODO Auto-generated method stub
-		return null;
+	
 	}
 	
 }
