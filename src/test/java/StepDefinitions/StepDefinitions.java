@@ -40,7 +40,6 @@ public class StepDefinitions {
         
 	    driver.findElement(By.id("onetrust-accept-btn-handler")).click();
 	    
-	    
 	    driver.findElement(By.id("email")).sendKeys(string);		
 		
 	}
@@ -72,9 +71,6 @@ public class StepDefinitions {
 	
 	}
 	
-	
-
-	//Password
 	WebElement password = driver.findElement(By.id("new_password"));
 	password.sendKeys(string2);
 	
